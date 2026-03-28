@@ -95,7 +95,7 @@ export function AnimatedIcon() {
   );
 }
 
-const styles = StyleSheet.create({
+const baseStyles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -117,16 +117,23 @@ const styles = StyleSheet.create({
     width: 76,
     height: 71,
   },
-  background: {
-    borderRadius: 40,
-    experimental_backgroundImage: `linear-gradient(180deg, #3C9FFE, #0274DF)`,
-    width: 128,
-    height: 128,
-    position: 'absolute',
-  },
   backgroundSolidColor: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#208AEF',
     zIndex: 1000,
   },
 });
+
+// Using a plain object + type assertion to allow experimental_backgroundImage
+// which is not yet in the official RN ViewStyle types
+const styles = {
+  ...baseStyles,
+  background: {
+    borderRadius: 40,
+    experimental_backgroundImage: 'linear-gradient(180deg, #3C9FFE, #0274DF)',
+    backgroundColor: '#0274DF',
+    width: 128,
+    height: 128,
+    position: 'absolute' as const,
+  },
+};

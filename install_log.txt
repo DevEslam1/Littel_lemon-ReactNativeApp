@@ -1,0 +1,42 @@
+﻿ΓÇ║ Installing 1 other package using npm
+ΓÇ║ Using ~54.0.0 instead of ~54.0.33 for expo because this version was explicitly provided. Packages excluded from dependency validation should be listed in expo.install.exclude in package.json. Learn more: https://docs.expo.dev/more/expo-cli/#configuring-dependency-validation
+> npm install --legacy-peer-deps
+
+added 35 packages, removed 206 packages, changed 61 packages, and audited 729 packages in 56s
+
+57 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+ΓÇ║ Running npx expo install under the updated expo version
+> expo install --fix -- --legacy-peer-deps
+node.exe : The following packages should 
+be updated for best compatibility with 
+the installed expo version:
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifi 
+   ed: (The following p...d expo versio  
+  n::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComm 
+   andError
+ 
+  @types/react@18.3.28 - expected 
+version: ~19.1.10
+  typescript@5.3.3 - expected version: 
+~5.9.2
+Your project may not work correctly 
+until you install the expected versions 
+of the packages.
+ΓÇ║ Installing 2 SDK 54.0.0 compatible native modules using npm
+> npm install --legacy-peer-deps
+
+removed 1 package, changed 2 packages, and audited 728 packages in 2s
+
+57 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities

@@ -1,33 +1,48 @@
-import { NativeTabs } from 'expo-router/unstable-native-tabs';
+import { Tabs, TabList, TabSlot, TabTrigger } from 'expo-router/ui';
 import React from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, View, StyleSheet, Pressable, Text } from 'react-native';
 
 import { Colors } from '@/constants/theme';
 
 export default function AppTabs() {
   const scheme = useColorScheme();
-  const colors = Colors[scheme === 'unspecified' ? 'light' : scheme];
+  const colors = Colors[scheme ?? 'light'];
 
   return (
-    <NativeTabs
-      backgroundColor={colors.background}
-      indicatorColor={colors.backgroundElement}
-      labelStyle={{ selected: { color: colors.text } }}>
-      <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={require('@/assets/images/tabIcons/home.png')}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger name="explore">
-        <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={require('@/assets/images/tabIcons/explore.png')}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
-    </NativeTabs>
+    <Tabs>
+      <TabSlot />
+      <TabList asChild>
+        <View style={[styles.tabBar, { backgroundColor: colors.background }]}>
+          <TabTrigger name="index" href="/" asChild>
+            <Pressable style={styles.tabButton}>
+              <Text style={[styles.tabLabel, { color: colors.text }]}>Home</Text>
+            </Pressable>
+          </TabTrigger>
+          <TabTrigger name="explore" href="/explore" asChild>
+            <Pressable style={styles.tabButton}>
+              <Text style={[styles.tabLabel, { color: colors.textSecondary }]}>Explore</Text>
+            </Pressable>
+          </TabTrigger>
+        </View>
+      </TabList>
+    </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    flexDirection: 'row',
+    padding: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.08)',
+  },
+  tabButton: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  tabLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+});

@@ -1,98 +1,96 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ActionButton } from '../components/ActionButton';
+import { Colors, Fonts } from '../constants/theme';
+import { GlassOverlay } from '../components/GlassOverlay';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+const { width } = Dimensions.get('window');
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Home() {
+  const router = useRouter();
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
-
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.imageContainer}>
+        {/* Placeholder image representation matching the organic brutalism style */}
+        <View style={styles.heroBackground} />
+        
+        <View style={styles.contentContainer}>
+          <Text style={styles.heroTitle}>A taste of {"\n"}the Mediterranean</Text>
+          
+          <GlassOverlay style={styles.glassCard}>
+            <Text style={styles.subtitle}>
+              Based in Chicago, Illinois, Little Lemon is a family-owned Mediterranean restaurant, 
+              focused on traditional recipes served with a modern twist.
+            </Text>
+            
+            <View style={styles.buttonRow}>
+              <ActionButton 
+                title="Book a Table" 
+                onPress={() => router.push('/book')} 
+                style={styles.actionBtn}
+              />
+              <ActionButton 
+                title="View Menu" 
+                variant="secondary" 
+                onPress={() => router.push('/menu')} 
+                style={styles.actionBtn}
+              />
+            </View>
+          </GlassOverlay>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: Colors.light.background,
   },
-  safeArea: {
+  imageContainer: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    position: 'relative',
+    minHeight: 800,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  heroBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: Colors.light.primary,
+    borderBottomLeftRadius: 60, // Intentional asymmetry
+  },
+  contentContainer: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    paddingTop: 100,
+    paddingHorizontal: 24,
+    justifyContent: 'flex-start',
   },
-  title: {
-    textAlign: 'center',
+  heroTitle: {
+    fontFamily: Fonts.serif,
+    fontSize: 48,
+    color: '#fed723', // Bright Lemon color for the hero text
+    marginBottom: 40,
+    lineHeight: 56,
   },
-  code: {
-    textTransform: 'uppercase',
+  glassCard: {
+    marginTop: 40,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  subtitle: {
+    fontFamily: Fonts.sans,
+    fontSize: 16,
+    color: Colors.light.on_surface,
+    lineHeight: 24,
+    marginBottom: 32,
   },
+  buttonRow: {
+    flexDirection: 'column',
+    gap: 16,
+  },
+  actionBtn: {
+    width: '100%',
+  }
 });
